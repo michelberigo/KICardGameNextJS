@@ -1,0 +1,15 @@
+hr {
+    margin: 10px 0 !important;
+}
+
+.card-damage {
+    background-color: #fedcd1 !important;
+}
+
+.card-recovery {
+    background-color: #d3eeff !important;
+}
+
+.card-special {
+    background-color: #c0ffc0 !important;
+}
