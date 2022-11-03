@@ -13,3 +13,21 @@ hr {
 .card-special {
     background-color: #c0ffc0 !important;
 }
+
+/* HIDE RADIO */
+[type=radio] { 
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* IMAGE STYLES */
+[type=radio] + .select-fighter {
+    cursor: pointer;
+}
+
+/* CHECKED STYLES */
+[type=radio]:checked + .select-fighter {
+    outline: 4px solid #f00;
+}

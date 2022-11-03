@@ -86,6 +86,10 @@ function Game({ players, setPlayers, setMetaGame }) {
 
         players = game_functions.getPlayersByPosition(players, game.turn);
 
+        console.log(players);
+
+        setPlayers((prevState) => (players));
+
         setTimeout(() => {
             initTurn();
         }, 200);
@@ -130,7 +134,7 @@ function Game({ players, setPlayers, setMetaGame }) {
                                 <h5>Deck</h5>
                                 <ul>{players.player_2.deck.map((card, index) => <li key={index}>{card.name}</li>)}</ul>
                                 <h5>Discard</h5>
-                                <ul>{players.player_1.discard_pile.map((card, index) => <li key={index}>{card.name}</li>)}</ul>
+                                <ul>{players.player_2.discard_pile.map((card, index) => <li key={index}>{card.name}</li>)}</ul>
                             </div>
 
                             <div className="col-sm-2">
