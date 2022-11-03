@@ -119,7 +119,7 @@ function Game({ players, setPlayers, setMetaGame }) {
                             </div>
 
                             <div className="col-sm-4">
-                                <div className="text-center">
+                                <div className="text-start">
                                     <h4>Discard Pile</h4>
                                     
                                     <DiscardPile cards={players.player_1.discard_pile}></DiscardPile>
@@ -127,13 +127,11 @@ function Game({ players, setPlayers, setMetaGame }) {
                             </div>
 
                             <div className="col-sm-4">
-                                <h4>Player 2</h4>
-                                <h5>Hand</h5>
-                                <ul>{players.player_2.hand.map((card, index) => <li key={index}>{card.name}</li>)}</ul>
-                                <h5>Deck</h5>
-                                <ul>{players.player_2.deck.map((card, index) => <li key={index}>{card.name}</li>)}</ul>
-                                <h5>Discard</h5>
-                                <ul>{players.player_2.discard_pile.map((card, index) => <li key={index}>{card.name}</li>)}</ul>
+                                <div className="text-end">
+                                    <h4>Discard Pile</h4>
+                                    
+                                    <DiscardPile cards={players.player_2.discard_pile}></DiscardPile>
+                                </div>
                             </div>
 
                             <div className="col-sm-2">
