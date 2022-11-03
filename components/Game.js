@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Player from "./Player";
 import game_functions from '../helpers/game_functions'
 import Hand from "./Hand";
+import DiscardPile from "./DiscardPile";
 
 function Game({ players, setPlayers, setMetaGame }) {
     const [game, setGame] = useState({turn: 0});
@@ -118,13 +119,11 @@ function Game({ players, setPlayers, setMetaGame }) {
                             </div>
 
                             <div className="col-sm-4">
-                                <h4>Player 1</h4>
-                                <h5>Hand</h5>
-                                <ul>{players.player_1.hand.map((card, index) => <li key={index}>{card.name}</li>)}</ul>
-                                <h5>Deck</h5>
-                                <ul>{players.player_1.deck.map((card, index) => <li key={index}>{card.name}</li>)}</ul>
-                                <h5>Discard</h5>
-                                <ul>{players.player_1.discard_pile.map((card, index) => <li key={index}>{card.name}</li>)}</ul>
+                                <div className="text-center">
+                                    <h4>Discard Pile</h4>
+                                    
+                                    <DiscardPile cards={players.player_1.discard_pile}></DiscardPile>
+                                </div>
                             </div>
 
                             <div className="col-sm-4">

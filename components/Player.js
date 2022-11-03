@@ -2,7 +2,12 @@ function Player({ player }) {
     return (
         <div className={ player.turn_player ? 'border border-success p-2' : '' }>
             <div>
-                <h5 className="text-center">{ player.fighter_name }</h5>
+                <div className="text-center mb-2">
+                    <h5>{ player.fighter_name }</h5>
+
+                    <img src={player.fighter_avatar_url} alt={player.fighter_name} />
+                </div>
+                
 
                 <h6>Life: { player.life }</h6>
                 <h6>Armor: { player.armor }</h6>

@@ -3,7 +3,7 @@ import Game from "../components/Game";
 import SelectFighter from "../components/SelectFighter";
 
 export async function getServerSideProps() {
-    let res = await fetch(`http://killerinstinct.test/api/fighters`)
+    let res = await fetch(`https://ki-card-game-api.herokuapp.com/api/fighters`)
     res = await res.json()
 
     let fighters = res.data;
@@ -36,6 +36,7 @@ function Single({ fighters }) {
                 player_1: {
                     ...prevState.player_1,
                     fighter_name: player1Fighter.name,
+                    fighter_avatar_url: player1Fighter.avatar_url,
                     life: player1Fighter.life,
                     armor: player1Fighter.armor,
                     damage_energy: player1Fighter.damage_energy,
@@ -54,6 +55,7 @@ function Single({ fighters }) {
                 player_2: {
                     ...prevState.player_2,
                     fighter_name: player2Fighter.name,
+                    fighter_avatar_url: player2Fighter.avatar_url,
                     life: player2Fighter.life,
                     armor: player2Fighter.armor,
                     damage_energy: player2Fighter.damage_energy,
