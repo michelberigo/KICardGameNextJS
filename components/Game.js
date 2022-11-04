@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Player from "./Player";
 import game_functions from '../helpers/game_functions'
 import Hand from "./Hand";
@@ -7,6 +7,11 @@ import DiscardPile from "./DiscardPile";
 
 function Game({ players, setPlayers, setMetaGame }) {
     const [game, setGame] = useState({turn: 0});
+    const isFirstRender = useRef(true)
+
+    useEffect(() => {
+        initGame();
+    }, []);
 
     useEffect(() => {
         if (players.player_1.winner || players.player_2.winner) {
@@ -15,6 +20,15 @@ function Game({ players, setPlayers, setMetaGame }) {
             finishGame(winnerPlayer);
         }
     });
+
+    useEffect(() => {
+        if (isFirstRender.current) {
+            isFirstRender.current = false;
+            return;
+        }
+
+        initTurn();
+     }, [game]);
 
     const finishGame = (winnerPlayer) => {
         let message = winnerPlayer.fighter_name + ' won!';
@@ -35,24 +49,36 @@ function Game({ players, setPlayers, setMetaGame }) {
 
         setPlayers((prevState) => (players));
 
-        initTurn();
+        incrementTurn();
+    }
+
+    const incrementTurn = () => {
+        let turn = game.turn + 1;
+
+        setGame({turn: turn});
     }
 
     const initTurn = () => {
-        let turn = game.turn + 1;
-
         players = {...players};
 
-        players = game_functions.setTurnPlayer(turn, players);
+        players = game_functions.setTurnPlayer(game.turn, players);
         players = game_functions.getPlayersByTurn(players.player_1, players.player_2);
-        players.turn_player = game_functions.addEnergies(players.turn_player);
-        players = game_functions.getPlayersByPosition(players, turn);
 
-        setGame({turn: turn});
+        let cpuTurn = players.turn_player.is_cpu;
+
+        players.turn_player = game_functions.addEnergies(players.turn_player);
+        players = game_functions.getPlayersByPosition(players, game.turn);
+
         setPlayers((prevState) => (players));
+
+        if (cpuTurn) {
+            setTimeout(() => {
+                playBot();
+            }, 200);
+        }
     }
 
-    const playCard = (event, card, cardPositionInHand, cardPlayable) => {
+    const playCard = (card, cardPositionInHand, cardPlayable) => {
         if (!cardPlayable) {
             return;
         }
@@ -60,6 +86,7 @@ function Game({ players, setPlayers, setMetaGame }) {
         players = {...players};
 
         players = game_functions.getPlayersByTurn(players.player_1, players.player_2);
+
         players.turn_player = game_functions.calculateEnergy(players.turn_player, card);
         players.turn_player = game_functions.receiveEffect(players.turn_player, card, true);
         players.non_turn_player = game_functions.receiveEffect(players.non_turn_player, card, false);
@@ -72,33 +99,55 @@ function Game({ players, setPlayers, setMetaGame }) {
         setPlayers((prevState) => (players));
 
         setTimeout(() => {
-            initTurn();
+            incrementTurn();
         }, 200);
     }
 
-    const discardCard = (event, card, cardPositionInHand) => {
-        event.preventDefault();
-
+    const discardCard = (card, cardPositionInHand) => {
         players = {...players};
 
         players = game_functions.getPlayersByTurn(players.player_1, players.player_2);
+
+        if (players.turn_player.is_cpu) {
+            return;
+        }
+        
         players.turn_player = game_functions.moveCardToDiscardPile(players.turn_player, cardPositionInHand);
         players.turn_player = game_functions.drawCard(players.turn_player, 1);
 
         players = game_functions.getPlayersByPosition(players, game.turn);
 
-        console.log(players);
-
         setPlayers((prevState) => (players));
 
         setTimeout(() => {
-            initTurn();
+            incrementTurn();
         }, 200);
     }
 
-    useEffect(() => {
-        initGame();
-    }, []);
+    const playBot = () => {
+        players = {...players};
+
+        players = game_functions.getPlayersByTurn(players.player_1, players.player_2);
+
+        let playableCards = game_functions.getPlayableCards(players.turn_player);
+        let card = null;
+
+        if (playableCards) {
+            card = playableCards[Math.floor(Math.random() * playableCards.length)];
+
+            players = game_functions.getPlayersByPosition(players, game.turn);
+
+            playCard(card, card.position_in_hand, true);
+        } else {
+            let positionInHand = Math.floor(Math.random() * players.turn_player.hand.length);
+
+            card = players.turn_player.hand[positionInHand];
+
+            players = game_functions.getPlayersByPosition(players, game.turn);
+
+            discardCard(card, positionInHand);
+        }
+    }
 
     return (
         <>
@@ -127,7 +176,7 @@ function Game({ players, setPlayers, setMetaGame }) {
                             </div>
 
                             <div className="col-sm-4">
-                                <div className="text-end">
+                                <div className="float-end">
                                     <h4>Discard Pile</h4>
                                     
                                     <DiscardPile cards={players.player_2.discard_pile}></DiscardPile>

@@ -26,10 +26,20 @@ function Card({ card, player, positionInHand, playCard, discardCard }) {
         return cardClass;
     }
 
+    const cardOpacity = () => {
+        let cardOpacity = '';
+
+        if (!cardPlayable()) {
+            cardOpacity = 'opacity-75';
+        }
+
+        return cardOpacity;
+    }
+
     return (
-        <div className={ 'card mx-auto ' + cardColor() }
-            style={{ width: '8rem', height: '9rem' }} onClick={(event) => playCard(event, card, positionInHand, cardPlayable())}
-            onContextMenu={(event) => discardCard(event, card, positionInHand)}
+        <div className={ 'card mx-auto stretched-link ' + cardOpacity() + ' ' + cardColor() }
+            style={{ width: '8rem', height: '9rem' }} onClick={(event) => playCard(card, positionInHand, cardPlayable())}
+            onContextMenu={(event) => discardCard(card, positionInHand)}
         >
             <div className="card-header px-1 py-2">
                 <div className="text-end"><span className="badge rounded-pill bg-primary">{ card.cost }</span></div>

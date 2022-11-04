@@ -19,7 +19,7 @@ function DiscardPile({ cards }) {
         <>
             {
                 lastCard &&
-                <div className={ 'card mx-auto ' + cardColor(lastCard) } style={{ width: '8rem', height: '9rem' }}>
+                <div className={ 'card stretched-link ' + cardColor(lastCard) } style={{ width: '8rem', height: '9rem' }}>
                     <div className="card-header px-1 py-2">
                         <div className="text-end"><span className="badge rounded-pill bg-primary">{ lastCard.cost }</span></div>
                     </div>

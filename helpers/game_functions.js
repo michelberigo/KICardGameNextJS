@@ -296,6 +296,34 @@ const game_functions = {
         return value;
     },
 
+    isPlayableCard: function (player, card) {
+        let playable = true;
+
+        if ((card.type_id == 1 && card.cost > player.damage_energy)
+            || (card.type_id == 2 && card.cost > player.recovery_energy)
+            || (card.type_id == 3 && card.cost > player.special_energy)
+        ) {
+            playable = false;
+        }
+
+        return playable;
+    },
+
+    getPlayableCards: function (player) {
+        let _this = this;
+        let playableCards = [];
+
+        player.hand.forEach(function (card, index) {
+            if (_this.isPlayableCard(player, card)) {
+                card.position_in_hand = index;
+
+                playableCards.push(card);
+            }
+        });
+
+        return playableCards;
+    },
+
     canUseHability: function (player) {
         let canUseHability = player.turn_use_hability % player.qtde_turns_use_hability == 0;
 
