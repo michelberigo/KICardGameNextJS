@@ -125,28 +125,30 @@ function Game({ players, setPlayers, setMetaGame }) {
     }
 
     const playBot = () => {
-        players = {...players};
+        setTimeout(() => {
+            players = {...players};
 
-        players = game_functions.getPlayersByTurn(players.player_1, players.player_2);
+            players = game_functions.getPlayersByTurn(players.player_1, players.player_2);
 
-        let playableCards = game_functions.getPlayableCards(players.turn_player);
-        let card = null;
+            let playableCards = game_functions.getPlayableCards(players.turn_player);
+            let card = null;
 
-        if (playableCards) {
-            card = playableCards[Math.floor(Math.random() * playableCards.length)];
+            if (playableCards) {
+                card = playableCards[Math.floor(Math.random() * playableCards.length)];
 
-            players = game_functions.getPlayersByPosition(players, game.turn);
+                players = game_functions.getPlayersByPosition(players, game.turn);
 
-            playCard(card, card.position_in_hand, true);
-        } else {
-            let positionInHand = Math.floor(Math.random() * players.turn_player.hand.length);
+                playCard(card, card.position_in_hand, true);
+            } else {
+                let positionInHand = Math.floor(Math.random() * players.turn_player.hand.length);
 
-            card = players.turn_player.hand[positionInHand];
+                card = players.turn_player.hand[positionInHand];
 
-            players = game_functions.getPlayersByPosition(players, game.turn);
+                players = game_functions.getPlayersByPosition(players, game.turn);
 
-            discardCard(card, positionInHand);
-        }
+                discardCard(card, positionInHand);
+            }
+        }, 1000);
     }
 
     return (
