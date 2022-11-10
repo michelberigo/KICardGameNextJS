@@ -15,12 +15,16 @@ function Card({ card, player, positionInHand, playCard, discardCard }) {
     const cardColor = () => {
         let cardClass = '';
 
-        if (card.type_id == 1) {
-            cardClass += 'card-damage';
-        } else if (card.type_id == 2) {
-            cardClass += 'card-recovery';
-        } else if (card.type_id == 3) {
-            cardClass += 'card-special';
+        if (!cardPlayable()) {
+            cardClass += 'card-not-playable';
+        } else {
+            if (card.type_id == 1) {
+                cardClass += 'card-damage';
+            } else if (card.type_id == 2) {
+                cardClass += 'card-recovery';
+            } else if (card.type_id == 3) {
+                cardClass += 'card-special';
+            }
         }
 
         return cardClass;
@@ -41,17 +45,14 @@ function Card({ card, player, positionInHand, playCard, discardCard }) {
             style={{ width: '8rem', height: '9rem' }} onClick={(event) => playCard(card, positionInHand, cardPlayable())}
             onContextMenu={(event) => discardCard(card, positionInHand)}
         >
-            <div className="card-header px-1 py-2">
-                <div className="text-end"><span className="badge rounded-pill bg-primary">{ card.cost }</span></div>
+            <div className="card-header px-1">
+                <span className="badge rounded-pill bg-primary">{ card.type.name }</span>
+                <span className="float-end"><span className="badge rounded-pill bg-primary">{ card.cost }</span></span>
             </div>
             
             <div className="card-body text-center px-1 py-2">
                 <h6 style={{ fontSize: '12px' }} className="text-uppercase text-danger fw-bold">{ card.name }</h6>
                 <div style={{ fontSize: '12px' }}>{ card.description }</div>
-            </div>
-
-            <div className="card-footer d-flex justify-content-center align-items-center">
-                <span className="badge rounded-pill bg-primary">{ card.type.name }</span>
             </div>
         </div>
     )

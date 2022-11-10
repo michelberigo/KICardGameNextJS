@@ -133,7 +133,7 @@ function Game({ players, setPlayers, setMetaGame }) {
             let playableCards = game_functions.getPlayableCards(players.turn_player);
             let card = null;
 
-            if (playableCards) {
+            if (!!playableCards) {
                 card = playableCards[Math.floor(Math.random() * playableCards.length)];
 
                 players = game_functions.getPlayersByPosition(players, game.turn);

@@ -15,21 +15,21 @@ function Player({ player }) {
 
             <hr />
 
-            <div className="card-damage">
+            <div className="card-damage p-1">
                 <h6 title="Damage Energy Per Turn">Damage: { player.damage_energy_per_turn }</h6>
                 <h6 title="Current Damage Energy">Damage Energy: { player.damage_energy }</h6>
             </div>
 
             <hr />
 
-            <div className="card-recovery">
+            <div className="card-recovery p-1">
                 <h6 title="Recovery Energy Per Turn">Recovery: { player.recovery_energy_per_turn }</h6>
                 <h6 title="Current Recovery Energy">Recovery Energy: { player.recovery_energy }</h6>
             </div>
 
             <hr />
 
-            <div className="card-special">
+            <div className="card-special p-1">
                 <h6 title="Special Energy Per Turn">Special: { player.special_energy_per_turn }</h6>
                 <h6 title="Current Special Energy">Special Energy: { player.special_energy }</h6>
             </div>

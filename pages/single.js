@@ -3,8 +3,9 @@ import Game from "../components/Game";
 import SelectFighter from "../components/SelectFighter";
 
 export async function getServerSideProps() {
-    let res = await fetch(`https://ki-card-game-api.herokuapp.com/api/fighters`)
-    res = await res.json()
+    //let res = await fetch(`https://ki-card-game-api.herokuapp.com/api/fighters`);
+    let res = await fetch(`http://kicardgameapi.test/api/fighters`);
+    res = await res.json();
 
     let fighters = res.data;
 
