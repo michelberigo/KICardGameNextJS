@@ -107,10 +107,6 @@ function Game({ players, setPlayers, setMetaGame }) {
         players = {...players};
 
         players = game_functions.getPlayersByTurn(players.player_1, players.player_2);
-
-        if (players.turn_player.is_cpu) {
-            return;
-        }
         
         players.turn_player = game_functions.moveCardToDiscardPile(players.turn_player, cardPositionInHand);
         players.turn_player = game_functions.drawCard(players.turn_player, 1);
@@ -133,7 +129,9 @@ function Game({ players, setPlayers, setMetaGame }) {
             let playableCards = game_functions.getPlayableCards(players.turn_player);
             let card = null;
 
-            if (!!playableCards) {
+            console.log(playableCards);
+
+            if (playableCards.length > 0) {
                 card = playableCards[Math.floor(Math.random() * playableCards.length)];
 
                 players = game_functions.getPlayersByPosition(players, game.turn);
