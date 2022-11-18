@@ -129,8 +129,6 @@ function Game({ players, setPlayers, setMetaGame }) {
             let playableCards = game_functions.getPlayableCards(players.turn_player);
             let card = null;
 
-            console.log(playableCards);
-
             if (playableCards.length > 0) {
                 card = playableCards[Math.floor(Math.random() * playableCards.length)];
 
