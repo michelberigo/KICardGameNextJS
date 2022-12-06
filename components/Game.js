@@ -103,6 +103,13 @@ function Game({ players, setPlayers, setMetaGame }) {
         }, 200);
     }
 
+    const eventDiscardCard = (event, card, cardPositionInHand) => {
+        event.preventDefault();
+        
+        discardCard(card, cardPositionInHand);
+    }
+
+
     const discardCard = (card, cardPositionInHand) => {
         players = {...players};
 
@@ -190,7 +197,7 @@ function Game({ players, setPlayers, setMetaGame }) {
 
                 <div className="h-25">
                     <Hand cards={game_functions.getTurnPlayer(players).hand} player={game_functions.getTurnPlayer(players)}
-                        playCard={playCard} discardCard={discardCard}
+                        playCard={playCard} eventDiscardCard={eventDiscardCard}
                     />
                 </div>
             </div>

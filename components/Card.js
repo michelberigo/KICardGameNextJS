@@ -1,4 +1,4 @@
-function Card({ card, player, positionInHand, playCard, discardCard }) {
+function Card({ card, player, positionInHand, playCard, eventDiscardCard }) {
     const cardPlayable = () => {
         let playable = true;
 
@@ -42,8 +42,8 @@ function Card({ card, player, positionInHand, playCard, discardCard }) {
 
     return (
         <div className={ 'card mx-auto stretched-link ' + cardOpacity() + ' ' + cardColor() }
-            style={{ width: '8rem', height: '9rem' }} onClick={(event) => playCard(card, positionInHand, cardPlayable())}
-            onContextMenu={(event) => discardCard(card, positionInHand)}
+            style={{ width: '8rem', height: '9rem' }} onClick={(event) => playCard(event, card, positionInHand, cardPlayable())}
+            onContextMenu={(event) => eventDiscardCard(event, card, positionInHand)}
         >
             <div className="card-header px-1">
                 <span className="badge rounded-pill bg-primary">{ card.type.name }</span>
