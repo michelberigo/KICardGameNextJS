@@ -8,7 +8,6 @@ function Player({ player }) {
                     <img src={player.fighter_avatar_url} alt={player.fighter_name} />
                 </div>
                 
-
                 <h6>Life: { player.life }</h6>
                 <h6>Armor: { player.armor }</h6>
             </div>

@@ -2,12 +2,16 @@ function DiscardPile({ cards }) {
     const cardColor = (card) => {
         let cardClass = '';
 
-        if (card.type_id == 1) {
-            cardClass += 'card-damage';
-        } else if (card.type_id == 2) {
-            cardClass += 'card-recovery';
-        } else if (card.type_id == 3) {
-            cardClass += 'card-special';
+        if (card.discarded) {
+            cardClass += 'card-not-playable';
+        } else {
+            if (card.type_id == 1) {
+                cardClass += 'card-damage';
+            } else if (card.type_id == 2) {
+                cardClass += 'card-recovery';
+            } else if (card.type_id == 3) {
+                cardClass += 'card-special';
+            }
         }
 
         return cardClass;

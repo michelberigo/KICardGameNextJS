@@ -13,7 +13,15 @@ export async function getServerSideProps() {
 }
 
 function Single({ fighters }) {
-    const [metaGame, setMetaGame] = useState({can_start: false});
+    const [metaGame, setMetaGame] = useState({
+        can_start: false,
+        player_1: {
+            fighter_random: false,
+        },
+        player_2: {
+            fighter_random: false,
+        }
+    });
 
     const [players, setPlayers] = useState({
         player_1: {
@@ -31,10 +39,22 @@ function Single({ fighters }) {
     });
 
     const playGame = () => {
-        if (players.player_1.fighter_id && players.player_2.fighter_id) {
-            let player1Fighter = fighters.find(x => x.id == players.player_1.fighter_id);
-            let player2Fighter = fighters.find(x => x.id == players.player_2.fighter_id);
-    
+        let player1Fighter = null;
+        let player2Fighter = null;
+
+        if (players.player_1.fighter_id) {
+            player1Fighter = fighters.find(x => x.id == players.player_1.fighter_id);
+        } else if (metaGame.player_1.fighter_random) {
+            player1Fighter = fighters[Math.floor(Math.random() * fighters.length)];
+        }
+
+        if (players.player_2.fighter_id) {
+            player2Fighter = fighters.find(x => x.id == players.player_2.fighter_id);
+        } else if (metaGame.player_2.fighter_random) {
+            player2Fighter = fighters[Math.floor(Math.random() * fighters.length)];
+        }
+
+        if (player1Fighter && player2Fighter) {
             setPlayers((prevState) => ({
                 player_1: {
                     ...prevState.player_1,
@@ -84,7 +104,7 @@ function Single({ fighters }) {
         <>
             { metaGame.can_start
                 ? <Game players={players} setPlayers={setPlayers} setMetaGame={setMetaGame} />
-                : <SelectFighter players={players} setPlayers={setPlayers} fighters={fighters} playGame={playGame} /> }
+                : <SelectFighter players={players} setPlayers={setPlayers} fighters={fighters} playGame={playGame} metaGame={metaGame} setMetaGame={setMetaGame} /> }
         </>
     );
 }

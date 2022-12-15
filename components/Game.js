@@ -44,8 +44,8 @@ function Game({ players, setPlayers, setMetaGame }) {
 
         players.player_1.deck = game_functions.shuffleDeck(players.player_1.deck);
         players.player_2.deck = game_functions.shuffleDeck(players.player_2.deck);
-        players.player_1 = game_functions.drawCard(players.player_1, 5);
-        players.player_2 = game_functions.drawCard(players.player_2, 5);
+        players.player_1 = game_functions.drawCard(players.player_1, 7);
+        players.player_2 = game_functions.drawCard(players.player_2, 7);
 
         setPlayers((prevState) => (players));
 
@@ -90,7 +90,7 @@ function Game({ players, setPlayers, setMetaGame }) {
         players.turn_player = game_functions.calculateEnergy(players.turn_player, card);
         players.turn_player = game_functions.receiveEffect(players.turn_player, card, true);
         players.non_turn_player = game_functions.receiveEffect(players.non_turn_player, card, false);
-        players.turn_player = game_functions.moveCardToDiscardPile(players.turn_player, cardPositionInHand);
+        players.turn_player = game_functions.moveCardToDiscardPile(players.turn_player, cardPositionInHand, false);
         players.turn_player.winner = game_functions.checkWinner(players.non_turn_player);
         players.turn_player = game_functions.drawCard(players.turn_player, 1);
 
@@ -115,7 +115,7 @@ function Game({ players, setPlayers, setMetaGame }) {
 
         players = game_functions.getPlayersByTurn(players.player_1, players.player_2);
         
-        players.turn_player = game_functions.moveCardToDiscardPile(players.turn_player, cardPositionInHand);
+        players.turn_player = game_functions.moveCardToDiscardPile(players.turn_player, cardPositionInHand, true);
         players.turn_player = game_functions.drawCard(players.turn_player, 1);
 
         players = game_functions.getPlayersByPosition(players, game.turn);
@@ -177,6 +177,8 @@ function Game({ players, setPlayers, setMetaGame }) {
                                     <h4>Discard Pile</h4>
                                     
                                     <DiscardPile cards={players.player_1.discard_pile}></DiscardPile>
+
+                                    <h4>Deck: {players.player_1.deck.length} cards</h4>
                                 </div>
                             </div>
 
@@ -185,6 +187,8 @@ function Game({ players, setPlayers, setMetaGame }) {
                                     <h4>Discard Pile</h4>
                                     
                                     <DiscardPile cards={players.player_2.discard_pile}></DiscardPile>
+
+                                    <h4>Deck: {players.player_2.deck.length} cards</h4>
                                 </div>
                             </div>
 

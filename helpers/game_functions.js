@@ -201,6 +201,8 @@ const game_functions = {
 
             player.armor = 0;
             player.life += lifeDamage;
+
+            player.life = this.resetValue(player.life, 0);
         } else {
             player.life -= damage;
 
@@ -220,8 +222,9 @@ const game_functions = {
         return winner;
     },
 
-    moveCardToDiscardPile: function (player, cardPosition) {
+    moveCardToDiscardPile: function (player, cardPosition, cardDiscarded) {
         let cardToDiscardPile = player.hand.splice(cardPosition, 1);
+        cardToDiscardPile[0].discarded = cardDiscarded;
 
         player.discard_pile.push(cardToDiscardPile[0]);
 
